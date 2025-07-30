@@ -107,7 +107,7 @@
 
 - name: Downloading official Docker binaries archive
   ansible.builtin.get_url:
-    url: "https://download.docker.com/linux/static/stable/x86_64/docker-{{ docker_version }}.tgz"
+    url: "https://download.docker.com/linux/static/stable/{{ ansible_architecture }}/docker-{{ docker_version }}.tgz"
     dest: "{{ docker_download_dir }}/docker-{{ docker_version }}.tgz"
     mode: "0640"
   when: not docker_bin_stat.stat.exists or (upgrade_docker is defined and upgrade_docker == "true")
