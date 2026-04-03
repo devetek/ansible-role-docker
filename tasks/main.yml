@@ -241,9 +241,9 @@
 
 - name: Install docker-compose binary
   when:
-    - docker_compose_type is defined
+    - docker_compose_type is defined and docker_compose_type in ['standalone', 'plugin']
   ansible.builtin.include_tasks:
-    file: "tasks/docker-compose.yml"
+    file: "tasks/docker-compose-{{ docker_compose_type }}.yml"
     apply:
       tags:
         - docker-compose
