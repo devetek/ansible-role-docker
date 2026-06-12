@@ -1,5 +1,13 @@
 ---
 
+- name: Ensure docker compose cli plugins directory exists
+  ansible.builtin.file:
+    path: /usr/local/lib/docker/cli-plugins
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
 - name: Downloading docker compose plugins binary v2 and make exec
   ansible.builtin.get_url:
     url: "https://github.com/docker/compose/releases/download/v{{ docker_compose_version }}/docker-compose-{{ ansible_system | lower }}-{{ ansible_architecture }}"

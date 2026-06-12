@@ -16,19 +16,8 @@
   tags:
     - always
 
-- name: Bootstrap python3-apt on Debian family hosts
-  when:
-    - ansible_facts['os_family'] == "Debian"
-  ansible.builtin.raw: |
-    if python3 -c 'import apt' >/dev/null 2>&1; then
-      echo "python3-apt already present"
-    else
-      export DEBIAN_FRONTEND=noninteractive
-      apt-get update
-      apt-get install -y python3-apt
-    fi
-  register: docker__python3_apt_bootstrap
-  changed_when: "'python3-apt already present' not in docker__python3_apt_bootstrap.stdout"
+- ansible.builtin.include_tasks: deps-{{ ansible_os_family | lower }}.yml
+  when: ansible_os_family in ['RedHat', 'Debian'] # supported os family
 
 - name: Gather the package facts
   ansible.builtin.package_facts:
